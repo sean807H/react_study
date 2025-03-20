@@ -1,13 +1,3 @@
-import { useState } from 'react'
-
-// Hook => 함수인데, 이름이 "use"로 시작하는 특수한 역할을 하는 함수
-// useState, useEffect, useRef 같은 훅이 존재
-// (물론, 그 외에도 다양한 훅이 있음)
-
-function App(){
-    return <div></div>
-}
-
 // 함수 컴포넌트 정의
 // (이름이 반드시 대문자로 시작)
 function App() {
