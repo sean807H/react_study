@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 type Quiz = {
     id: string;
@@ -29,6 +30,7 @@ const deleteQuiz = async (id: string) => {
 
 export default function ManageQuiz() {
     const [quizzes, setQuizzes] = useState<Quiz[] | null>(null);
+    const navigate = useNavigate()
 
     useEffect(() => {
         (async () => {
@@ -39,7 +41,9 @@ export default function ManageQuiz() {
     }, []);
     return <div>
         <h1>퀴즈 관리</h1>
-        <button>새 퀴즈 생성</button>
+        <button onClick={()=>{
+            navigate("/create")
+        }}>새 퀴즈 생성</button>
         {
             quizzes?.map(q => <div key={q.id}>
                 <h3>{q.question}</h3>
@@ -48,6 +52,15 @@ export default function ManageQuiz() {
                         return <span style={idx === q.answer ? { color: "red" } : {}}>{idx + 1}. {c}&nbsp;</span>
                     })
                 }
+                <button onClick={async() => {
+                    try{
+                        await deleteQuiz(q.id)
+                        setQuizzes(quizzes.filter(quiz => q.id !== quiz.id))
+                    } catch(error){
+                        console.log(error);
+                        
+                    }
+                }}>퀴즈 삭제</button>
             </div>)
         }
     </div>
